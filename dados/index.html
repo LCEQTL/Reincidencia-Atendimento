@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel · Reincidência de Atendimento</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:16px}
+  .filters>div{min-width:140px}
+  .filters select,.filters input{padding:7px 9px;font-size:14px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px}
+  .kpi{background:#fff;border:1px solid var(--ln);border-radius:8px;padding:14px 16px}
+  .kpi .v{font-size:28px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+  .kpi .l{font-size:13px;color:var(--mt);margin-top:4px}
+  .kpi .d{font-size:12px;color:var(--mt);margin-top:6px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:1000px){.grid2{grid-template-columns:1fr}}
+  .grid2 .box{margin-bottom:0}
+  .full{grid-column:1/-1}
+  .box .sub{font-size:12.5px;color:var(--mt);margin:-8px 0 12px}
+  /* barras */
+  .bars{display:flex;flex-direction:column;gap:6px}
+  .brow{display:grid;grid-template-columns:150px 1fr 48px;gap:10px;align-items:center;font-size:13.5px}
+  .brow .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#344054}
+  .brow .tr{height:18px;position:relative}
+  .brow .fl{height:100%;border-radius:0 4px 4px 0;min-width:2px}
+  .brow .vl{text-align:right;font-variant-numeric:tabular-nums;color:#344054;font-weight:600}
+  .brow.stk .tr{display:flex;gap:2px}
+  .brow.stk .tr>div{height:100%}
+  .brow.stk .tr>div:last-child{border-radius:0 4px 4px 0}
+  .lg{display:flex;gap:14px;font-size:12.5px;color:var(--mt);margin-bottom:10px;flex-wrap:wrap}
+  .lg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+  /* mapa de calor */
+  table.hm{border-collapse:separate;border-spacing:2px;font-size:13px;width:100%}
+  table.hm th{font-weight:600;color:#475467;font-size:12px;padding:4px 6px;text-align:center;white-space:nowrap}
+  table.hm th.rl{text-align:left}
+  table.hm td{text-align:center;padding:6px 4px;border-radius:4px;font-variant-numeric:tabular-nums;min-width:48px}
+  table.hm td.rl{text-align:left;background:none;color:#344054;white-space:nowrap;padding-left:0}
+  table.hm td.tot{background:none;font-weight:600;color:#344054}
+  table.tb{border-collapse:collapse;width:100%;font-size:13.5px}
+  table.tb th{text-align:left;font-size:12px;color:#475467;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--ln)}
+  table.tb td{padding:7px 8px;border-bottom:1px solid #eef0f3}
+  #tip{position:fixed;pointer-events:none;background:#1f2733;color:#fff;font-size:12.5px;padding:6px 9px;border-radius:5px;z-index:400;display:none;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+  svg .hov{fill:transparent;cursor:default}
+  /* auditoria */
+  .modal.aud .mc{max-width:98vw;width:98vw;height:94vh;display:flex;flex-direction:column;padding:16px 18px}
+  .tabs{display:flex;gap:4px;border-bottom:1px solid var(--ln);margin:10px 0 12px}
+  .tabs button{border:none;background:none;padding:8px 14px;font:inherit;font-size:14px;color:var(--mt);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .tabs button.on{color:var(--tx);border-bottom-color:#1f2733;font-weight:600}
+  .aud .sheet{flex:1;height:auto;resize:none}
+  .cfg h3{font-size:13px;margin:20px 0 10px;text-transform:uppercase;letter-spacing:.4px;color:#475467}
+  .cfg .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .cfg .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .cfg textarea{width:100%;min-height:160px;border:1px solid var(--ln);border-radius:6px;padding:8px;font-family:Consolas,monospace;font-size:12.5px}
+  .mono{font-family:Consolas,monospace;font-size:13px;background:#f6f7f9;border-radius:6px;padding:10px 12px;word-break:break-all;margin-top:8px}
+  .corner{position:fixed;right:16px;bottom:16px;z-index:40}
+</style>
+</head>
+<body>
+
+<div id="gate"><div class="lc">
+  <div class="lh"><b>Painel · Reincidência</b><span>Distribuidora <span data-dist></span></span></div>
+  <div class="lb"><label class="f">Palavra-chave do link</label><input class="inp" type="password" id="kw">
+    <div class="err" id="gErr"></div><button class="btn pri" id="kwGo" style="width:100%">Abrir</button></div>
+</div></div>
+
+<header class="top">
+  <span class="mark"></span>
+  <h1>Reincidência de Atendimento <span>· <span data-dist></span></span></h1>
+  <nav><a href="../" id="lnkDem">Demandas</a><a href="./" class="on">Painel</a></nav>
+  <span class="sp"></span>
+  <button class="hbtn sync" id="syncBtn" title="Atualizar"><i></i><span id="syncTxt"></span></button>
+  <button class="hbtn" id="btnEx" title="Abre um ambiente de teste com dados fictícios, só para você"></button>
+  <button class="hbtn help" id="btnHelp" title="Ajuda">?</button>
+</header>
+
+<main>
+  <div class="filters" id="filters">
+    <div><label class="f">Período</label><select class="inp" id="fPer"><option value="7">Últimos 7 dias</option><option value="30" selected>Últimos 30 dias</option><option value="90">Últimos 90 dias</option><option value="all">Tudo</option><option value="cus">Escolher datas</option></select></div>
+    <div id="fCus" style="display:none;min-width:0"><label class="f">De / até</label><div style="display:flex;gap:6px"><input class="inp" type="date" id="fDe"><input class="inp" type="date" id="fAte"></div></div>
+    <div><label class="f">Superintendência</label><select class="inp" id="fReg"></select></div>
+    <div><label class="f">Regional</label><select class="inp" id="fRg"></select></div>
+    <div><label class="f">Base</label><select class="inp" id="fBase"></select></div>
+    <div><label class="f">Responsável</label><select class="inp" id="fResp"></select></div>
+    <div><label class="f">Tipo</label><select class="inp" id="fTipo"></select></div>
+    <div style="min-width:0"><button class="btn" id="fClear">Limpar filtros</button></div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid2">
+    <div class="box"><h3>Reavisos por responsável</h3><div class="sub">Envios em que a demanda já estava no 2º aviso ou mais, no período</div><div id="cResp"></div></div>
+    <div class="box"><h3>Reavisos por base</h3><div class="sub">As 12 bases com mais reavisos no período</div><div id="cBase"></div></div>
+    <div class="box"><h3>Demandas por tipo</h3><div class="sub">Recebidas no período</div><div id="cTipo"></div></div>
+    <div class="box"><h3>Recebidas e resolvidas</h3><div class="sub" id="cWkSub"></div><div id="cWk"></div></div>
+    <div class="box full"><h3>Base × tipo de reclamação</h3><div class="sub">Demandas recebidas no período. Quanto mais escuro, mais demandas.</div><div id="cHm" style="overflow-x:auto"></div></div>
+    <div class="box"><h3>Abertas agora, por tempo em aberto</h3><div class="sub">Dias desde o registro da demanda</div><div id="cAge"></div></div>
+    <div class="box"><h3>Contas com mais de uma demanda</h3><div class="sub">Mesma conta contrato registrada mais de uma vez no período</div><div id="cConta"></div></div>
+    <div class="box full" id="cardDia">
+      <div class="bar"><h3 style="margin:0">Card do dia</h3><span class="sp"></span>
+        <div><input class="inp" type="date" id="cdDia" style="width:160px"></div>
+        <div><select class="inp" id="cdReg" style="width:170px"></select></div>
+        <label class="chk" style="margin:0"><input type="checkbox" id="cdSplit"> Um por responsável</label>
+        <button class="btn pri" id="cdGo">Gerar imagem</button></div>
+      <div class="sub" id="cdInfo"></div>
+      <div class="pv" id="cdPv"></div>
+    </div>
+  </div>
+</main>
+
+<footer><span>Reincidência de Atendimento · <span data-dist></span></span><span class="sp"></span><span>Contato: <a data-mail href="#"></a></span></footer>
+<button class="btn sm corner" id="btnAud">Auditar dados</button>
+
+<div class="modal" id="mPass"><div class="mc" style="max-width:360px">
+  <b style="font-size:16px">Auditar dados</b>
+  <form id="passForm" style="margin-top:14px"><label class="f">Senha</label><input class="inp" type="password" id="audPass" autocomplete="off">
+    <div class="err" id="passErr" style="color:#b42318;font-size:13px;min-height:18px;margin-top:6px"></div>
+    <div class="bar" style="margin:6px 0 0"><span class="sp"></span><button type="button" class="btn" data-close>Cancelar</button><button class="btn pri">Entrar</button></div></form>
+</div></div>
+
+<div class="modal aud" id="mAud"><div class="mc">
+  <div class="bar" style="margin:0"><b style="font-size:16px">Auditar dados</b><span class="sp"></span><button class="btn" data-close>Fechar</button></div>
+  <div class="tabs"><button class="on" data-tab="tBase">Base completa</button><button data-tab="tCfg">Configuração</button></div>
+  <div id="tBase" style="flex:1;display:flex;flex-direction:column;min-height:0">
+    <div class="bar">
+      <input class="inp" id="aBusca" placeholder="Buscar nota, conta, município…" style="width:260px">
+      <select class="inp" id="aReg" style="width:170px"></select>
+      <select class="inp" id="aSit" style="width:190px"><option value="ativas">Ativas (na tela)</option><option value="arq">Arquivadas</option><option value="del">Excluídas</option><option value="all" selected>Todas</option></select>
+      <span class="hint" id="aCnt"></span><span class="sp"></span>
+      <button class="btn sm" id="aCsv">Exportar CSV completo</button>
+    </div>
+    <div class="sheet"><table class="g" id="aGrid"><colgroup id="aCg"></colgroup><thead id="aGh"></thead><tbody id="aRows"></tbody></table></div>
+    <p class="hint" style="margin:8px 0 0">As alterações valem na hora e ficam registradas no histórico como auditoria.</p>
+  </div>
+  <div id="tCfg" class="cfg" style="display:none;overflow:auto">
+    <h3>Distribuidora</h3>
+    <div class="g3"><div><label class="f">Nome</label><input class="inp" id="cDist"></div><div><label class="f">E-mail de contato (rodapé)</label><input class="inp" id="cMail"></div><div><label class="f">Nova senha de auditoria (em branco = mantém)</label><input class="inp" type="password" id="cAudPw" autocomplete="new-password"></div></div>
+    <h3>Superintendências e regionais</h3>
+    <div class="g3" id="cRegs"></div>
+    <h3>Base de municípios (municipios.csv)</h3>
+    <p class="hint" style="margin:0 0 8px">Cole a planilha com as colunas MUNICIPIO · BASE · REGIONAL, com cabeçalho.</p>
+    <textarea id="cMun"></textarea><div class="hint" id="cMunInfo"></div>
+    <h3>Repositório GitHub</h3>
+    <div class="g4"><div><label class="f">Dono</label><input class="inp" id="gOwner"></div><div><label class="f">Repositório</label><input class="inp" id="gRepo"></div>
+      <div><label class="f">Branch do site</label><input class="inp" id="gMain"></div><div><label class="f">Branch de dados</label><input class="inp" id="gBranch"></div></div>
+    <div class="g3" style="grid-template-columns:2fr 1fr;margin-top:12px"><div><label class="f">Token (vazio = mantém o atual)</label><input class="inp" type="password" id="gTok" autocomplete="off"></div><div><label class="f">Palavra-chave do link</label><input class="inp" type="password" id="gKw" autocomplete="off"></div></div>
+    <p class="hint" id="gState" style="margin:10px 0 0"></p><div id="gLink"></div>
+    <div class="bar" style="margin:20px 0 6px"><button class="btn" id="cTest">Testar conexão</button><button class="btn" id="cDl">Baixar config.json e municipios.csv</button><span class="sp"></span>
+      <button class="btn" id="cSave">Salvar neste navegador</button><button class="btn pri" id="cPub">Salvar e publicar no repositório</button></div>
+  </div>
+</div></div>
+
+<div class="modal help" id="mHelp"><div class="mc">
+  <div class="mh"><b>Ajuda</b><span style="flex:1"></span><button class="btn sm" data-close>Fechar</button></div>
+  <iframe id="helpFrame" title="Ajuda"></iframe>
+</div></div>
+<div id="tip"></div>
+<div id="toast"></div>
+<script>window.BASE='../';</script>
+<script src="../assets/municipios-local.js"></script>
+<script src="../assets/core.js"></script>
+<script src="../assets/bi.js"></script>
+</body>
+</html>

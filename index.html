@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reincidência de Atendimento</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div id="gate"><div class="lc">
+  <div class="lh"><b>Reincidência de Atendimento</b><span>Distribuidora <span data-dist></span> · escolha a sua superintendência</span></div>
+  <div class="lb">
+    <div id="kwBox" style="display:none;margin-bottom:14px"><label class="f">Palavra-chave do link</label><input class="inp" type="password" id="kw"></div>
+    <div class="pf" id="regBtns"></div>
+    <div class="err" id="gErr"></div>
+  </div>
+</div></div>
+
+<header class="top">
+  <span class="mark"></span>
+  <h1>Reincidência de Atendimento <span>· <span data-dist></span></span></h1>
+  <nav><a href="./" class="on">Demandas</a><a href="dados/" id="lnkBI">Painel</a></nav>
+  <span class="sp"></span>
+  <span class="who">Superintendência <b id="who"></b></span>
+  <button class="hbtn" id="btnTroca">Trocar</button>
+  <button class="hbtn sync" id="syncBtn" title="Sincronizar agora"><i></i><span id="syncTxt"></span></button>
+  <button class="hbtn" id="btnEx" title="Abre um ambiente de teste com dados fictícios, só para você"></button>
+  <button class="hbtn help" id="btnHelp" title="Ajuda">?</button>
+</header>
+
+<main>
+  <div class="box">
+    <div class="bar">
+      <h2>Demandas</h2><span class="hint" id="cnt"></span>
+      <span class="sp"></span>
+      <button class="btn pri" id="btnAdd">+ Nova linha</button>
+      <button class="btn sm" id="btnXls" title="Planilha com as mesmas colunas e listas suspensas">Baixar planilha</button>
+      <label class="btn sm" style="margin:0" title="Importa uma planilha baixada daqui (ou CSV)">Importar planilha<input type="file" id="fileImp" accept=".xlsx,.csv,.txt" hidden></label>
+    </div>
+    <div class="sheet" id="sheet"><table class="g" id="grid"><colgroup id="cg"></colgroup><thead id="gh"></thead><tbody id="rows"></tbody></table></div>
+    <textarea class="paste" id="paste" rows="1" placeholder="Colar do Excel: copie as linhas (com o cabeçalho) e cole aqui com Ctrl+V. Nota já existente é atualizada."></textarea>
+    <p class="hint" style="margin:8px 0 0"><b style="color:#b42318">*</b> campos obrigatórios (prazo é obrigatório em "Com prazo" e "Fora do prazo"). Linha incompleta fica marcada e não entra no card.
+      Município só aceita os cadastrados na superintendência; ao escolher a base ou a regional, a lista de municípios se ajusta.
+      <span class="legend"><i style="background:#fbf3d5;border:1px solid #ecd27a"></i>1º–2º aviso</span><span class="legend"><i style="background:#fbe4e2;border:1px solid #eba3a3"></i>3º aviso em diante</span></p>
+  </div>
+
+  <div class="box">
+    <div class="pvbox">
+      <div class="ctl">
+        <h2>Card</h2>
+        <label class="l">Formato</label><div class="seg" id="segFmt"></div>
+        <div id="cusBox" style="display:none;margin-top:10px"><div style="display:flex;gap:8px;align-items:center">
+          <input id="cw" class="inp" type="number" min="300" step="10"> <span>×</span><input id="ch" class="inp" type="number" min="300" step="10"></div>
+          <div class="hint" style="margin-top:4px">Largura × altura em pixels.</div></div>
+        <div class="hint" id="resInfo" style="margin-top:8px"></div>
+        <label class="chk"><input type="checkbox" id="split"> Um card por responsável</label>
+        <button class="btn pri" id="btnJpg" style="margin-top:18px">Gerar imagem (JPG)</button>
+        <button class="btn" id="btnTxt">Texto resumido</button>
+      </div>
+      <div class="pv" id="pv"></div>
+    </div>
+  </div>
+</main>
+
+<footer><span>Reincidência de Atendimento · <span data-dist></span></span><span class="sp"></span><span>Contato: <a data-mail href="#"></a></span></footer>
+
+<div class="modal" id="mImg"><div class="mc">
+  <div class="bar" style="margin:0"><b style="font-size:16px" id="mImgTitle">Imagem pronta</b><span class="sp"></span><button class="btn" data-close>Fechar</button></div>
+  <p class="hint" style="margin:6px 0 0">Baixar ou copiar registra o envio: soma um aviso nas pendentes da imagem e arquiva as resolvidas. Se o download não funcionar, clique com o botão direito na imagem → Copiar imagem.</p>
+  <div class="imgs" id="imgs"></div>
+</div></div>
+
+<div class="modal" id="mTxt"><div class="mc">
+  <div class="bar" style="margin:0"><b style="font-size:16px">Texto para WhatsApp</b><span class="sp"></span>
+    <button class="btn pri" id="mTxtCopy">Copiar texto</button><button class="btn" data-close>Fechar</button></div>
+  <pre id="mTxtEl"></pre>
+</div></div>
+
+<div class="modal help" id="mHelp"><div class="mc">
+  <div class="mh"><b>Ajuda</b><span style="flex:1"></span><button class="btn sm" data-close>Fechar</button></div>
+  <iframe id="helpFrame" title="Ajuda"></iframe>
+</div></div>
+
+<div id="dl"></div>
+<div id="toast"></div>
+<script>window.BASE='';</script>
+<script src="assets/municipios-local.js"></script>
+<script src="assets/core.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

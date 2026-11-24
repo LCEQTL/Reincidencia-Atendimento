@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajuda · Reincidência de Atendimento</title>
+<style>
+  body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;color:#1f2733;font-size:15px;line-height:1.6;background:#fff}
+  .wrap{max-width:780px;margin:0 auto;padding:24px 28px 60px}
+  h1{font-size:22px;margin:0 0 4px}
+  .lead{color:#667085;margin:0 0 20px}
+  nav.toc{background:#f6f7f9;border-radius:8px;padding:12px 16px;margin-bottom:28px;font-size:14px;columns:2}
+  nav.toc a{display:block;color:#1f2733;text-decoration:none;padding:2px 0}
+  nav.toc a:hover{text-decoration:underline}
+  h2{font-size:17px;margin:34px 0 10px;padding-top:14px;border-top:1px solid #e4e7ec}
+  h3{font-size:15px;margin:20px 0 6px}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0 14px}
+  th{text-align:left;background:#f4f6f8;color:#475467;font-weight:600;font-size:12.5px;padding:8px 10px;border-bottom:1px solid #d9dee5}
+  td{padding:8px 10px;border-bottom:1px solid #eef0f3;vertical-align:top}
+  td:first-child{white-space:nowrap;font-weight:600}
+  .req{color:#b42318}
+  .tag{display:inline-block;padding:1px 8px;border-radius:4px;font-size:12.5px;font-weight:600;white-space:nowrap}
+  .note{background:#fff8e1;border:1px solid #f0d68a;border-radius:8px;padding:10px 14px;font-size:14px;margin:12px 0}
+  ol,ul{padding-left:22px} li{margin:4px 0}
+  kbd{background:#f2f4f7;border:1px solid #d9dee5;border-radius:4px;padding:0 5px;font-size:13px}
+</style>
+</head>
+<body><div class="wrap">
+<h1>Como usar</h1>
+<p class="lead">Registro das reclamações reincidentes, envio do card para o grupo e acompanhamento no painel.</p>
+
+<nav class="toc">
+  <a href="#entrar">1. Entrar</a><a href="#campos">2. Campos da tabela</a><a href="#ligados">3. Município, base e regional</a>
+  <a href="#preencher">4. Preencher mais rápido</a><a href="#resolver">5. Resolver e excluir</a><a href="#avisos">6. Avisos e bandeiras</a>
+  <a href="#card">7. Gerar e enviar o card</a><a href="#painel">8. Painel</a><a href="#exemplo">9. Modo exemplo</a><a href="#duvidas">10. Dúvidas comuns</a>
+</nav>
+
+<h2 id="entrar">1. Entrar</h2>
+<p>Abra sempre pelo link completo que você recebeu, com a palavra-chave depois do <kbd>#</kbd>. Na primeira vez, escolha a sua superintendência. O navegador lembra da escolha. Para mudar, use <b>Trocar</b> no topo.</p>
+<p>Você só vê e edita as demandas da sua superintendência. Tudo é salvo sozinho. O indicador no topo mostra a situação:
+<span class="tag" style="background:#e7f8ef;color:#1d6b43">Sincronizado</span>
+<span class="tag" style="background:#fdf3e1;color:#8a5a00">Alterações a enviar</span>
+<span class="tag" style="background:#fde3e1;color:#b42318">Erro</span>.
+Com erro, clique no indicador para tentar de novo.</p>
+
+<h2 id="campos">2. Campos da tabela</h2>
+<p>Os campos com <span class="req">*</span> são obrigatórios. A célula vazia fica rosada, e a linha incompleta <b>não entra no card</b> até ser completada.</p>
+<table>
+  <tr><th>Campo</th><th>O que colocar</th></tr>
+  <tr><td>Tipo de serviço <span class="req">*</span></td><td>O tipo da reclamação. Para falta de energia, escolha a faixa de tempo (até 24h, 3–5, 5–7, 8–10 ou mais de 10 dias). <b>SGFI</b> preenche o responsável como Relacionamento, e <b>PLA</b> como Obras.</td></tr>
+  <tr><td>Município <span class="req">*</span></td><td>Digite e escolha da lista. Só são aceitos os municípios cadastrados na sua superintendência. Ao escolher, base e regional se preenchem sozinhas.</td></tr>
+  <tr><td>Base <span class="req">*</span></td><td>A base que atende o município. Escolher a base primeiro limita a lista de municípios aos daquela base.</td></tr>
+  <tr><td>Regional <span class="req">*</span></td><td>A regional da base. Normalmente se preenche sozinha.</td></tr>
+  <tr><td>Nº da nota <span class="req">*</span></td><td>Número da nota, só os dígitos. É o que identifica a demanda: a mesma nota colada de novo atualiza a linha existente.</td></tr>
+  <tr><td>Conta contrato</td><td>Conta do cliente. Opcional, mas ajuda o painel a encontrar o mesmo cliente reclamando várias vezes.</td></tr>
+  <tr><td>Responsável <span class="req">*</span></td><td>A área que precisa dar retorno: Manutenção, STC, Relacionamento ou Obras. O card é agrupado por responsável.</td></tr>
+  <tr><td>Status <span class="req">*</span></td><td>
+    <span class="tag" style="background:#fde3e1;color:#c62828">Sem retorno</span>: a área ainda não respondeu.<br>
+    <span class="tag" style="background:#efe7fd;color:#7c3aed">Fora do prazo</span>: a área deu prazo e ele venceu.<br>
+    <span class="tag" style="background:#fdf1dc;color:#b45309">Com prazo</span>: a área respondeu e deu um prazo.</td></tr>
+  <tr><td>Prazo</td><td>Data prometida pela área. <b>Obrigatório</b> quando o status é Com prazo ou Fora do prazo. Prazo vencido aparece em vermelho no card.</td></tr>
+  <tr><td>Canal</td><td>Por onde a reclamação chegou: Presencial ou Delfos. Opcional e discreto no card.</td></tr>
+  <tr><td>Relato</td><td>Observação curta. Não aparece na imagem, só no texto resumido.</td></tr>
+  <tr><td>Aviso</td><td>Número do aviso que a demanda vai receber no próximo envio. Sobe sozinho; use − e + só para corrigir.</td></tr>
+</table>
+
+<h2 id="ligados">3. Município, base e regional</h2>
+<p>Os três campos andam juntos, nos dois sentidos:</p>
+<ul>
+  <li>Escolheu o <b>município</b>: base e regional se preenchem.</li>
+  <li>Escolheu a <b>base</b> primeiro: a lista de municípios mostra só os daquela base.</li>
+  <li>Escolheu a <b>regional</b>: as listas de base e de municípios se ajustam a ela.</li>
+  <li>Trocou a base ou a regional e o município não pertence mais a ela: o município é apagado para você escolher de novo.</li>
+</ul>
+<p>Se o município digitado não estiver cadastrado, ele é recusado. Se faltar algum município na base, fale com o contato no rodapé.</p>
+
+<h2 id="preencher">4. Preencher mais rápido</h2>
+<ul>
+  <li><b>+ Nova linha</b> cria uma linha vazia. <kbd>Enter</kbd> desce para a linha de baixo e, na última, cria uma nova.</li>
+  <li><b>Colar do Excel</b>: copie as linhas da planilha <b>com o cabeçalho</b> e cole na caixa abaixo da tabela ou em qualquer célula. Linhas com município não cadastrado ou sem nota são ignoradas, e um aviso mostra quais foram.</li>
+  <li><b>Baixar planilha</b> gera um Excel com as mesmas colunas da tela e listas suspensas nos campos certos. Dá para preencher offline e trazer de volta com <b>Importar planilha</b>.</li>
+  <li>As colunas podem ser alargadas arrastando a borda do cabeçalho, e a tabela pode crescer arrastando o canto inferior direito.</li>
+</ul>
+
+<h2 id="resolver">5. Resolver e excluir</h2>
+<ul>
+  <li><b>Resolver</b> marca a demanda como resolvida. Ela fica apagada na tabela, aparece <b>uma única vez</b> como "Resolvido" no próximo card baixado e depois sai da tela sozinha. Antes do envio, <b>Desfazer</b> volta atrás.</li>
+  <li><b>✕</b> exclui a linha (clique duas vezes para confirmar). Use só para lançamento errado. Para demanda atendida, use Resolver.</li>
+</ul>
+
+<h2 id="avisos">6. Avisos e bandeiras</h2>
+<p>Cada vez que você <b>baixa ou copia</b> o card, toda demanda pendente que está na imagem ganha mais um aviso. Gerar de novo em menos de 3 horas não conta outro aviso.</p>
+<table>
+  <tr><th>Aviso</th><th>Como aparece</th></tr>
+  <tr><td>1º e 2º</td><td><span class="tag" style="background:#fff8d9;border:1px solid #ecd27a">Bandeira amarela</span>: fundo amarelo claro no card.</td></tr>
+  <tr><td>3º em diante</td><td><span class="tag" style="background:#fdeaea;border:1px solid #eba3a3">Bandeira vermelha</span>: fundo vermelho claro no card.</td></tr>
+</table>
+
+<h2 id="card">7. Gerar e enviar o card</h2>
+<ol>
+  <li>Confira se não há linhas incompletas. O contador no topo da tabela avisa.</li>
+  <li>Escolha o formato. <b>Vertical 4:5</b> é o que melhor aparece na prévia do WhatsApp; <b>Cabe tudo</b> faz uma imagem só, comprida; <b>Personalizado</b> aceita qualquer tamanho.</li>
+  <li>Marque <b>Um card por responsável</b> se quiser mandar uma imagem para cada área.</li>
+  <li>Clique em <b>Gerar imagem</b> e depois em <b>Baixar</b> ou <b>Copiar</b> (para colar direto no WhatsApp Web com <kbd>Ctrl</kbd>+<kbd>V</kbd>).</li>
+</ol>
+<p>Dentro de cada responsável, a ordem é: faixa de falta de energia mais grave primeiro e, no empate, quem tem mais avisos. SGFI e serviço comercial ficam no fim, e as resolvidas por último.</p>
+<p><b>Texto resumido</b> gera uma versão curta em texto para colar no grupo. Copiar o texto também conta como envio.</p>
+
+<h2 id="painel">8. Painel</h2>
+<p>A aba <b>Painel</b> abre já filtrada na sua superintendência; para ver as outras, troque no filtro. Os filtros ficam no topo (período, superintendência, regional, base, responsável e tipo) e valem para todos os gráficos.</p>
+<table>
+  <tr><th>Bloco</th><th>O que mostra</th></tr>
+  <tr><td>Números do topo</td><td>Recebidas e resolvidas no período, abertas agora, tempo médio até resolver, reavisos, % que chegaram ao 3º aviso e cards enviados.</td></tr>
+  <tr><td>Reavisos</td><td>Quantas vezes uma demanda foi cobrada de novo (2º aviso em diante), por responsável e por base. Mostra quem mais deixa sem retorno.</td></tr>
+  <tr><td>Demandas por tipo</td><td>Volume de cada tipo de reclamação recebida.</td></tr>
+  <tr><td>Recebidas e resolvidas</td><td>Evolução por dia (períodos curtos) ou por semana.</td></tr>
+  <tr><td>Base × tipo</td><td>Onde cada tipo de problema se concentra. Quanto mais escuro, mais demandas.</td></tr>
+  <tr><td>Tempo em aberto</td><td>Demandas abertas agora, separadas por quantos dias estão registradas e pelo status.</td></tr>
+  <tr><td>Contas repetidas</td><td>Mesma conta contrato com mais de uma demanda no período.</td></tr>
+  <tr><td>Card do dia</td><td>Escolha um dia e uma superintendência para remontar e baixar a imagem que foi enviada naquele dia.</td></tr>
+</table>
+<p>Passe o mouse sobre as barras e as células para ver os números.</p>
+
+<h2 id="exemplo">9. Modo exemplo</h2>
+<p>O botão <b>Exemplo</b>, no topo, abre um ambiente de teste com dados fictícios da sua superintendência, para treinar ou mostrar o painel. Ali dá para mexer à vontade: criar, resolver, gerar card e usar o painel.</p>
+<ul>
+  <li>Nada do que acontece no exemplo vai para os dados reais nem aparece para outras pessoas. Fica só no seu navegador.</li>
+  <li>Enquanto ele estiver ativo, aparece uma faixa vermelha no topo.</li>
+  <li>Para voltar, clique em <b>Sair do exemplo</b>: tudo volta exatamente como estava, e os dados fictícios são descartados.</li>
+</ul>
+
+<h2 id="duvidas">10. Dúvidas comuns</h2>
+<h3>A demanda não aparece no card</h3>
+<p>Algum campo obrigatório está vazio (a célula fica rosada) ou o prazo está faltando em "Com prazo" ou "Fora do prazo".</p>
+<h3>O município não é aceito</h3>
+<p>Ele não está cadastrado na sua superintendência, ou não pertence à base escolhida. Apague a base, escolha o município e a base se preenche sozinha.</p>
+<h3>Mandei o card duas vezes e o aviso não subiu</h3>
+<p>Envios em menos de 3 horas contam como o mesmo aviso, para não inflar a contagem.</p>
+<h3>Abri em outro computador e os dados estão diferentes</h3>
+<p>Confira se abriu pelo link completo, com a palavra-chave. Sem ela, o site não acessa os dados compartilhados.</p>
+</div></body>
+</html>

@@ -1,0 +1,46 @@
+{
+ "rev": 1,
+ "distribuidora": "Piauí",
+ "contato": "lucas.cruz@equatorialenergia.com.br",
+ "regioes": [
+  {
+   "id": "NORTE",
+   "nome": "Norte",
+   "regionais": [
+    "PARNAIBA"
+   ]
+  },
+  {
+   "id": "SUL",
+   "nome": "Sul",
+   "regionais": [
+    "PICOS",
+    "FLORIANO"
+   ]
+  },
+  {
+   "id": "METRO",
+   "nome": "Metropolitana",
+   "regionais": [
+    "METROPOLITANA"
+   ]
+  }
+ ],
+ "auditoria": {
+  "s": "guwcJe05WjjP4CqrGT/Z9Q==",
+  "h": "eH1j6tl+QK47eh8yTBaLUOE9jBekaYEMuC/dAqXXLF4="
+ },
+ "gh": {
+  "owner": "lceqtl",
+  "repo": "Reincidencia-Atendimento",
+  "main": "main",
+  "branch": "dados",
+  "tok": {
+   "s": "I76G0SjHRZGRAu7J6oKGSg==",
+   "i": "HH0RRLpAAN3YPK1b",
+   "c": "mCjpJ1SRjmlBd9Z6Kx83n6aVPfeHeSodDlbGEqf+68GnXHIwFW5wBMricDPxH8GolYC2iyrjQRQZvDZQgg+w9bJ3fbO9iIUQ/g42oZzJ368UubKGcBQ8Hcc/18aFcCg2fY2h3/e2lbBBHHBoSQ==",
+   "it": 400000
+  },
+  "salt": "YsOW9Apsn/duyjMx8cHonw=="
+ }
+}
